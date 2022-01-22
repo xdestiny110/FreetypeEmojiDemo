@@ -1,4 +1,5 @@
 # Emoji render demo by using freetype
+[![windows-build](https://github.com/xdestiny110/FreetypeEmojiDemo/actions/workflows/build.yml/badge.svg)](https://github.com/xdestiny110/FreetypeEmojiDemo/actions/workflows/build.yml/badge.svg)
 
 ## Dependencies
 - conan
