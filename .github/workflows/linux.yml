@@ -1,4 +1,4 @@
-name: windows-build
+name: linux-build
 
 on:
   push:
@@ -18,9 +18,7 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: windows-latest
-            cuda: "11.0.1"
-            visual_studio: "Visual Studio 16 2019"
+          - os: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     - name: cache dependencies
@@ -40,4 +38,4 @@ jobs:
 
     - name: Build
       # Build your program with the given configuration
-      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target ALL_BUILD --verbose
+      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} -j4 --target ALL_BUILD --verbose
