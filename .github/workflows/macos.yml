@@ -10,8 +10,6 @@ env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: Release
   INSTALL_LOCATION: ".local"
-  CC: clang
-  CXX: clang++
 
 jobs:
   build:
@@ -34,18 +32,20 @@ jobs:
       # You may pin to the exact commit or the version.
       # uses: turtlebrowser/get-conan@4dc7e6dd45c8b1e02e909979d7cfc5ebba6ddbe2
       uses: turtlebrowser/get-conan@v1.0
-    - name: Setup Ninja
+    - name: Install ninja-build tool
       if: ${{ steps.cache.output.cache-hit != 'true' }}
       # You may pin to the exact commit or the version.
-      # uses: ashutoshvarma/setup-ninja@93f8b9763516f1fb9b4d9840b12d844bee17791f
-      uses: ashutoshvarma/setup-ninja@v1.1
+      # uses: seanmiddleditch/gha-setup-ninja@16b940825621068d98711680b6c3ff92201f8fc0
+      uses: seanmiddleditch/gha-setup-ninja@v3
       with:
-        # Ninja version. Make sure given ninja version exists in ninja github release
+        # Version of ninja-build to install
         version: # default is 1.10.0
-        # Folder where ninja binary will be downloaded
-        dest: # optional, default is ninja_bin
-        # Override default platform detection logic. Accepted values are [mac, linux, win]
-        platform: # optional
+        # Override default platform with one of [win, mac, linux]
+        platform: mac # optional
+        # Destination directory, will be added to PATH
+        destination: ${{env.INSTALL_LOCATION}} # optional, default is ninja-build
+        # Proxy server
+        http_proxy: # optional
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
@@ -53,4 +53,4 @@ jobs:
 
     - name: Build
       # Build your program with the given configuration
-      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} -j4 --target ALL_BUILD --verbose
+      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} -j4 --target all --verbose
