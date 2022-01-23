@@ -29,6 +29,7 @@ jobs:
         path: ${{env.INSTALL_LOCATION}}
         key: ${{matrix.os}}-dependencies
     - name: Get Conan
+      if: ${{ steps.cache.output.cache-hit != 'true' }}
       # You may pin to the exact commit or the version.
       # uses: turtlebrowser/get-conan@4dc7e6dd45c8b1e02e909979d7cfc5ebba6ddbe2
       uses: turtlebrowser/get-conan@v1.0
